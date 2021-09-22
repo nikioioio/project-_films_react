@@ -1,21 +1,26 @@
-import {Films} from '../Components/Films'
+import {Films} from '../Components/Films';
 import React from 'react';
-import {Preloader} from '../Components/Preloader'
-import {Search} from '../Components/Search'
+import {Preloader} from '../Components/Preloader';
+import {Search} from '../Components/Search';
+import { Filter } from '../Components/Filter'
+
 
 export class Main extends React.Component {
     constructor() {
         super();
         this.state = {
             data: [],
-            mask: 'matrix'
+            mask: 'matrix',
+            filter: ''
         }
 
     }
 
     getQueryWithMask = () => {
-        return `http://www.omdbapi.com/?s=${this.state.mask}&apikey=5c52e8bf`;
+        return `http://www.omdbapi.com/?s=${this.state.mask}&apikey=5c52e8bf&type=${this.state.filter}`;
     }
+
+
 
     updaterFunc  = async () =>  {
         const response = await fetch(this.getQueryWithMask());
@@ -30,8 +35,13 @@ export class Main extends React.Component {
     }
 
 
-    updateQuery = async  (mask) => {
+    updateQueryMask = async  (mask) => {
         await this.setState({mask: mask ,data: []})
+        await this.updaterFunc()
+    }
+
+    updateQueryFilter = async  (filter) => {
+        await this.setState({filter: filter ==='all' ? '': filter ,data: []})
         await this.updaterFunc()
     }
 
@@ -39,7 +49,8 @@ export class Main extends React.Component {
         const {data} = this.state
         return (
             <>
-                <Search updateQuery={this.updateQuery}/>
+                <Search updateQuery={this.updateQueryMask}/>
+                <Filter updateQueryFilter={this.updateQueryFilter}/>
                 <main className="container content">
                     {
                         data.length ? <Films data={data}/> : <Preloader/>

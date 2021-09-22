@@ -10,7 +10,7 @@ export class Search extends React.Component {
         const {updateQuery} = this.props;
         const {search} = this.state
         return (
-            <div style={{margin: '30px'}}  className="row">
+            <div style={{margin: '30px 15%'}}  className="row">
 
                 <div className="col s11">
                     <div className="input-field">
@@ -31,7 +31,7 @@ export class Search extends React.Component {
 
                 </div>
                 <div className="col s1">
-                    <a onClick={()=> updateQuery(search)} className="waves-effect waves-light btn right astyle">Find</a>
+                    <a onClick={()=> updateQuery(search)} className="waves-effect waves-light btn right astyle">search</a>
                 </div>
 
             </div>

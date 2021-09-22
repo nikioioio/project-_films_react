@@ -34,3 +34,32 @@ nav{
     height: 60px;
     font-size: 24px;
 }
+
+
+.wrapper_filter{
+	position: relative;
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: justify;
+	/* Свои стили */
+}
+	.wrapper_filter:after{
+		position: relative;
+		display: inline-block;
+		width: 100%;
+		height: auto;
+		box-sizing: border-box;
+		vertical-align: top;
+		content: '';
+	}
+	.wrapper_filter>label{
+		position: relative;
+		display: inline-block;
+		width: 25%;
+		height: 50px;
+		box-sizing: border-box;
+		text-align: left;
+		vertical-align: top;
+		/* Свои стили */
+	}
