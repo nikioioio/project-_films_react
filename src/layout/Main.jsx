@@ -11,7 +11,8 @@ export class Main extends React.Component {
         this.state = {
             data: [],
             mask: 'matrix',
-            filter: ''
+            filter: '',
+            loading: true,
         }
 
     }
@@ -26,8 +27,8 @@ export class Main extends React.Component {
         const response = await fetch(this.getQueryWithMask());
         const json = await response.json();
         await json.Response === "False" ?
-            await this.setState({data: []}) :
-            await this.setState({data: json['Search']})
+            await this.setState({data: [], loading: false}) :
+            await this.setState({data: json['Search'], loading: false})
     }
 
     async componentDidMount() {
@@ -36,25 +37,26 @@ export class Main extends React.Component {
 
 
     updateQueryMask = async  (mask) => {
-        await this.setState({mask: mask ,data: []})
+        await this.setState({mask: mask ,data: [], loading: true})
         await this.updaterFunc()
     }
 
     updateQueryFilter = async  (filter) => {
-        await this.setState({filter: filter ==='all' ? '': filter ,data: []})
+        await this.setState({filter: filter ==='all' ? '': filter ,data: [], loading: true})
         await this.updaterFunc()
     }
 
     render() {
-        const {data} = this.state
+        const {data, loading} = this.state
         return (
             <>
                 <Search updateQuery={this.updateQueryMask}/>
                 <Filter updateQueryFilter={this.updateQueryFilter}/>
                 <main className="container content">
                     {
-                        data.length ? <Films data={data}/> : <Preloader/>
+                        loading ? <Preloader/>: <Films data={data}/>
                     }
+
                 </main>
             </>
         )
