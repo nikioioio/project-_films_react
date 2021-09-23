@@ -1,14 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
-export class Search extends React.Component {
-    state = {
-        search: '',
-    }
+export const Search  = (props) => {
+    const [search, setSearch] = useState('')
 
-
-    render() {
-        const {updateQuery} = this.props;
-        const {search} = this.state
+        const {updateQuery} = props;
         return (
             <div style={{margin: '30px 15%'}}  className="row">
 
@@ -19,10 +14,10 @@ export class Search extends React.Component {
                             type="search"
                             className="validate"
                             value={search}
-                            onChange={(e) => this.setState({search: e.target.value})}
+                            onChange={(e) => setSearch(e.target.value)}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
-                                    updateQuery(search)
+                                    search.length ? updateQuery(search) : updateQuery('error')
                                 }
                             }}
                         />
@@ -31,10 +26,11 @@ export class Search extends React.Component {
 
                 </div>
                 <div className="col s1">
-                    <a onClick={()=> updateQuery(search)} className="waves-effect waves-light btn right astyle">search</a>
+                    <a onClick={()=> search.length ? updateQuery(search) : updateQuery('error') }
+                       className="waves-effect waves-light btn right astyle">search</a>
                 </div>
 
             </div>
         )
-    }
+
 }

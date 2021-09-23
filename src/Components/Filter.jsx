@@ -1,39 +1,38 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
-export class Filter extends React.Component {
+export const Filter = (props) => {
 
-    state = {
-        filterFilm: ''
+    const [filterFilm, setFilterFilm] = useState('')
+
+    const changeHandler = (event) => {
+        setFilterFilm(event.target.value);
     }
 
-    changeHandler = async (event) => {
-        await this.setState({filterFilm: event.target.value})
-        const {updateQueryFilter} = this.props
-        updateQueryFilter(this.state.filterFilm)
-    }
+    useEffect(() => {
+        const {updateQueryFilter} = props
+        updateQueryFilter(filterFilm)
+    },[filterFilm]);
 
-    render() {
-        const {filterFilm} = this.state
 
         return (
             <div style={{width:'70%', margin: '30px 20%', textAlign: 'justify'}} className="wrapper_filter col s12 m6">
                 <label>
-                    <input onChange={this.changeHandler}  name="group1" type="radio" value="all" checked={filterFilm === 'all'}/>
+                    <input onChange={changeHandler}  name="group1" type="radio" value="all" checked={filterFilm === 'all'}/>
                     <span>All</span>
                 </label>
 
                 <label>
-                    <input onChange={this.changeHandler} name="group1" type="radio" value="movies" checked={filterFilm === 'movies'}/>
+                    <input onChange={changeHandler} name="group1" type="radio" value="movies" checked={filterFilm === 'movies'}/>
                     <span>Movies only</span>
                 </label>
 
                 <label>
-                    <input onChange={this.changeHandler} name="group1" type="radio" value="series" checked={filterFilm === 'series'}/>
+                    <input onChange={changeHandler} name="group1" type="radio" value="series" checked={filterFilm === 'series'}/>
                     <span>Series only</span>
                 </label>
 
                 <label>
-                    <input onChange={this.changeHandler} name="group1" type="radio" value="episode" checked={filterFilm === 'episode'}/>
+                    <input onChange={changeHandler} name="group1" type="radio" value="episode" checked={filterFilm === 'episode'}/>
                     <span>Episode only</span>
                 </label>
 
@@ -41,7 +40,7 @@ export class Filter extends React.Component {
             </div>
 
         )
-    }
+
 
 }
 

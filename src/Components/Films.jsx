@@ -1,11 +1,11 @@
 import {Film} from './Film'
 
 export const Films = (props) => {
-    const {data} = props;
+    const {data,isError} = props;
     return (
         <>
             {
-               !data.length ? <h4 style={{textAlign: 'center'}}>Данных нет</h4> : false
+               !data.length ? <h4 style={{textAlign: 'center'}}>{isError ? 'Введите корректный запрос': 'Данных нет' }</h4> : false
             }
 
             <div className="wrapper">
@@ -13,7 +13,6 @@ export const Films = (props) => {
                         data.map(film => (
                             <Film key={film.imdbID} {...film}/>
                         ))
-
                 }
 
             </div>
